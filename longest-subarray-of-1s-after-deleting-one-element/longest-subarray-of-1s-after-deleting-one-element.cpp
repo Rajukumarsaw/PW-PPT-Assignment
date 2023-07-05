@@ -1,20 +1,24 @@
 class Solution {
 public:
-     unordered_map<int, int> mp;
+     
     int longestSubarray(vector<int>& nums) {
         int i=0,j=0,n=nums.size(),sum=0,maxsum=0;
-        while(j<n){
-            mp[nums[j]]++;
+        int zeros=0;
+        for(int j=0;j<n;j++){
+            if(nums[j]==0){
+                zeros++;
+            };
             sum+=nums[j];
-            while(mp[0]>1){
-                mp[nums[i]]--;
+            while(zeros>1){
+                if(nums[i]==0)
+                zeros--;
+
                 sum-=nums[i];
                 i++;
             }
             maxsum=max(maxsum,sum);
-            j++;
         }
-        if(mp[0]==0){
+        if(zeros==0){
             return maxsum-1;
         }
         return maxsum;
